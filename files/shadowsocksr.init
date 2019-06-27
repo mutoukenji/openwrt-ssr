@@ -270,12 +270,12 @@ start_redir() {
 	  local dnsserver=`echo "$dnsstr"|awk -F ':'  '{print $1}'`
 	  local dnsport=`echo "$dnsstr"|awk -F ':'  '{print $2}'`
 	  ipset add gfwlist $dnsserver 2>/dev/null
-	  cat > /tmp/dnsmasq.d/dnsmasq-ssr.conf <<EOF
-conf-dir=/etc/dnsmasq.ssr
-EOF
-	  /etc/init.d/dnsmasq restart
 	  start_pdnsd $dnsserver $dnsport
 	 fi
+	 cat > /tmp/dnsmasq.d/dnsmasq-ssr.conf <<EOF
+conf-dir=/etc/dnsmasq.ssr
+EOF
+	 /etc/init.d/dnsmasq restart
 	fi
 	
 	if [ "$(uci_get_by_type global enable_switch)" = "1" ] ;then
